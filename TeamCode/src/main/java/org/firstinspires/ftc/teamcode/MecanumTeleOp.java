@@ -53,7 +53,7 @@ public class MecanumTeleOp extends LinearOpMode {
             // Right bumper: servo up and down quickly
             if (gamepad2.right_bumper) {
                 robot.openFingerServo();
-                sleep(200); // Wait 200ms
+                sleep(1000); // Wait 200ms
                 robot.closeFingerServo();
             }
 
