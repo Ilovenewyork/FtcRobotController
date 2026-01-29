@@ -2,8 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -15,28 +13,17 @@ import java.util.List;
 @Autonomous(name = "AprilTag Autonomous", group = "Linear Opmode")
 public class AprilTagAuton extends LinearOpMode {
 
-    // Declare hardware variables
-    private DcMotor frontLeft = null;
-    private DcMotor frontRight = null;
-    private DcMotor backLeft = null;
-    private DcMotor backRight = null;
-    private DcMotor intakeMotor = null;
-    private DcMotor outtakeMotor = null;
-    private Servo fingerServo = null;
+    // Robot controls instance
+    private RobotControls robot;
 
     private AprilTagProcessor aprilTag;
     private VisionPortal visionPortal;
 
     @Override
     public void runOpMode() {
-        // Initialize hardware
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
-        outtakeMotor = hardwareMap.get(DcMotor.class, "outtakeMotor");
-        fingerServo = hardwareMap.get(Servo.class, "fingerServo");
+        // Initialize robot controls
+        robot = new RobotControls();
+        robot.initHardware(hardwareMap);
 
         // Initialize AprilTag Processor
         aprilTag = AprilTagProcessor.easyCreateWithDefaults();
@@ -106,14 +93,14 @@ public class AprilTagAuton extends LinearOpMode {
         telemetry.update();
 
         // Placeholder: Run intake for 2 seconds
-        intakeMotor.setPower(0.5);
+        robot.setIntakePower(0.5);
         sleep(2000);
-        intakeMotor.setPower(0);
+        robot.setIntakePower(0);
 
         // Final action placeholder
-        outtakeMotor.setPower(1.0);
+        robot.setOuttakePower(1.0);
         sleep(1000);
-        outtakeMotor.setPower(0);
+        robot.setOuttakePower(0);
     }
 
     private void executeTag2Steps() {
@@ -121,12 +108,12 @@ public class AprilTagAuton extends LinearOpMode {
         telemetry.update();
 
         // Placeholder: Drive forward slightly
-        setDrivePowers(0.3, 0.3, 0.3, 0.3);
+        robot.setWheelPower(0.3, 0.3, 0.3, 0.3);
         sleep(1000);
-        setDrivePowers(0, 0, 0, 0);
+        robot.stopDrive();
 
         // Open finger
-        fingerServo.setPosition(1.0);
+        robot.openFingerServo();
         sleep(500);
     }
 
@@ -135,9 +122,9 @@ public class AprilTagAuton extends LinearOpMode {
         telemetry.update();
 
         // Placeholder: Outtake immediately
-        outtakeMotor.setPower(0.8);
+        robot.setOuttakePower(0.8);
         sleep(3000);
-        outtakeMotor.setPower(0);
+        robot.setOuttakePower(0);
     }
 
     private void executeDefaultSteps() {
@@ -146,10 +133,4 @@ public class AprilTagAuton extends LinearOpMode {
         // Safe default behavior
     }
 
-    private void setDrivePowers(double fl, double fr, double bl, double br) {
-        frontLeft.setPower(fl);
-        frontRight.setPower(fr);
-        backLeft.setPower(bl);
-        backRight.setPower(br);
-    }
 }
