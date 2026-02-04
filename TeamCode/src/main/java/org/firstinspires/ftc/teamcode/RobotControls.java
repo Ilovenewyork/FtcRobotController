@@ -91,6 +91,8 @@ public class RobotControls {
      */
     public void setDriveDirection(double forward, double strafe, double rotate) {
         // Denominator ensures all powers maintain the same ratio
+//        forward = -1*forward;
+//        strafe = -1*strafe;
         double denominator = Math.max(Math.abs(forward) + Math.abs(strafe) + Math.abs(rotate), 1.0);
         
         double frontLeftPower = (forward + strafe + rotate) / denominator;

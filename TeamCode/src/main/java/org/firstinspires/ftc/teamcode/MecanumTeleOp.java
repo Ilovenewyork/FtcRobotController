@@ -99,7 +99,7 @@ public class MecanumTeleOp extends LinearOpMode {
                 sleep(1500); // Wait 1.5 seconds
                 robot.closeFingerServo(); // Down
                 sleep(1500); // Wait 1.5 seconds more
-                robot.setIntakePower(1.0); // Intake inwards
+                robot.setIntakePower(-1.0); // Intake inwards
                 sleep(500); // Run intake for 0.5 seconds
                 robot.setIntakePower(0.0); // Stop intake
             }
