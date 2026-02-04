@@ -144,14 +144,14 @@ public class RobotControls {
      * Open finger servo
      */
     public void openFingerServo() {
-        setServoPosition(0.8);
+        setServoPosition(0.57);
     }
     
     /**
      * Close finger servo
      */
     public void closeFingerServo() {
-        setServoPosition(0.45);
+        setServoPosition(0.22);
     }
     
     /**
